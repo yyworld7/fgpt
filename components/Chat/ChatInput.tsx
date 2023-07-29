@@ -169,18 +169,43 @@ export const ChatInput = ({
       e.preventDefault();
       setShowPluginSelect(!showPluginSelect);
     }
-  };*/
-
+  };
+  */
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
- if (showPromptList) {
-   // existing code...
- } else if (e.key === 'Enter' && !isTyping && !isMobile() && !e.shiftKey) {
-   e.preventDefault();
-   setTimeout(handleSend, 0);
- } else if (e.key === '/' && e.metaKey) {
-   e.preventDefault();
-   setShowPluginSelect(!showPluginSelect);
- }
+  if (showPromptList) {
+    if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        setActivePromptIndex((prevIndex) =>
+          prevIndex < prompts.length - 1 ? prevIndex + 1 : prevIndex,
+        );
+    } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        setActivePromptIndex((prevIndex) =>
+          prevIndex > 0 ? prevIndex - 1 : prevIndex,
+        );
+    } else if (e.key === 'Tab') {
+        e.preventDefault();
+        setActivePromptIndex((prevIndex) =>
+          prevIndex < prompts.length - 1 ? prevIndex + 1 : 0,
+        );
+    } else if (e.key === 'Enter') {
+        e.preventDefault();
+        handleInitModal();
+    } else if (e.key === 'Escape') {
+        e.preventDefault();
+        setShowPromptList(false);
+    } else {
+        setActivePromptIndex(0);
+    }
+  } else if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    if (!isTyping && !isMobile()) {
+        handleSend();
+    }
+  } else if (e.key === '/' && e.metaKey) {
+    e.preventDefault();
+    setShowPluginSelect(!showPluginSelect);
+  }
 };
 
   const parseVariables = (content: string) => {
@@ -342,8 +367,7 @@ export const ChatInput = ({
             value={content}
             rows={1}
             onCompositionStart={() => setIsTyping(true)}
-            //onCompositionEnd={() => setIsTyping(false)}
-            onCompositionEnd={() => setTimeout(() => setIsTyping(false), 0)}
+            onCompositionEnd={() => setIsTyping(false)}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
           />
@@ -409,49 +433,6 @@ export const ChatInput = ({
     </div>
   );
 };
-
-......
-
- 
-......
-
- 
-......
-
- 
-......
-
- 
-......
-
- 
-......
-
- 
-......
-
- 
-......
-
- 
-......
-
- 
-......
-
- 
-......
-
- 
-......
-
- 
-......
-
- 
-......
-
- 
 ......
 
  
