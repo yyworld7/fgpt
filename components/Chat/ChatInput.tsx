@@ -136,7 +136,7 @@ export const ChatInput = ({
     setShowPromptList(false);
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+  /*const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (showPromptList) {
       if (e.key === 'ArrowDown') {
         e.preventDefault();
@@ -169,7 +169,19 @@ export const ChatInput = ({
       e.preventDefault();
       setShowPluginSelect(!showPluginSelect);
     }
-  };
+  };*/
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+ if (showPromptList) {
+   // existing code...
+ } else if (e.key === 'Enter' && !isTyping && !isMobile() && !e.shiftKey) {
+   e.preventDefault();
+   setTimeout(handleSend, 0);
+ } else if (e.key === '/' && e.metaKey) {
+   e.preventDefault();
+   setShowPluginSelect(!showPluginSelect);
+ }
+};
 
   const parseVariables = (content: string) => {
     const regex = /{{(.*?)}}/g;
@@ -330,7 +342,8 @@ export const ChatInput = ({
             value={content}
             rows={1}
             onCompositionStart={() => setIsTyping(true)}
-            onCompositionEnd={() => setIsTyping(false)}
+            //onCompositionEnd={() => setIsTyping(false)}
+            onCompositionEnd={() => setTimeout(() => setIsTyping(false), 0)}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
           />
@@ -396,3 +409,49 @@ export const ChatInput = ({
     </div>
   );
 };
+
+......
+
+ 
+......
+
+ 
+......
+
+ 
+......
+
+ 
+......
+
+ 
+......
+
+ 
+......
+
+ 
+......
+
+ 
+......
+
+ 
+......
+
+ 
+......
+
+ 
+......
+
+ 
+......
+
+ 
+......
+
+ 
+......
+
+ 
