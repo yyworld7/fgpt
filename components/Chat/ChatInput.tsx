@@ -367,7 +367,8 @@ export const ChatInput = ({
             value={content}
             rows={1}
             onCompositionStart={() => setIsTyping(true)}
-            onCompositionEnd={() => setIsTyping(false)}
+            onKeyUp={() => setIsTyping(false)}
+            //onCompositionEnd={() => setIsTyping(false)}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
           />
@@ -433,6 +434,10 @@ export const ChatInput = ({
     </div>
   );
 };
+......
+
+ 
+
 ......
 
  
